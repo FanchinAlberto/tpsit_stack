@@ -24,7 +24,7 @@ void RemoveStack(cell* r)
 
 int main() {
 	cell* r = nullptr;
-	
+	cout << "Hello world" << endl;
 	AddStack(r, 's');
 	AddStack(r, 'a');
 	AddStack(r, 's');
