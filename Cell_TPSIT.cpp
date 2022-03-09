@@ -1,34 +1,60 @@
 #include <iostream>
 
 using namespace std;
+
 struct cell {
-	char value = ' ';
-	cell* next = nullptr;
+
+  char value;
+
+  cell * next = nullptr;
+
 };
 
-void AddStack(cell*r, char val) //funzione per aggiungere un elemento allo stack
+void AddStack(cell *&r, char val, int &counter) //funzione per aggiungere un elemento allo stack
 {
-	cell* newCell = new cell; //creo un nuovo spazio in memoria per la cella
-	r = newCell; //la mia root punta alla cella
-	newCell->value = val; //inserisco il valore della cella
-	newCell->next = newCell;
+
+  cell *newCell = new cell; //creo un nuovo spazio in memoria per la cella
+  newCell->value = val; //inserisco il valore della cella
+	
+  newCell -> next = r;
+	r = newCell;
+  counter++;
 }
 
-void RemoveStack(cell* r) 
-{
-	char tmp = r->value; //rimuovo il valore dallo stack
-	r = r->next; //sposto la root alla prossima cella
-	cout << tmp;
-	r->value = NULL; //cancello la cella
+void PrintStack(cell * r) {
+
+  for(cell* i = r; i != nullptr; i = i->next) { //stampo il valore della cella e faccio puntare p alla cella successiva
+    cout << i -> value;
+  }
+
+}
+void RemoveStack(cell *&r, int counter){
+  for(int i = 0; i < counter; i++){
+    cell *temp = r;
+    r = temp->next;
+    delete(temp);
+  }
+}
+void RemoveChar(cell *&r, int &counter){
+  cell *temp = r;
+    r = temp->next;
+    delete(temp);
+    counter--;
 }
 
 int main() {
-	cell* r = nullptr;
-	cout << "Hello world" << endl;
-	AddStack(r, 's');
-	AddStack(r, 'a');
-	AddStack(r, 's');
+  int counter = 0;
+  cell * r = nullptr;
 
-	RemoveStack(r);
+  AddStack(r, 's', counter);
+
+  AddStack(r, 'a',counter);
+
+  AddStack(r, 's', counter);
+  cout<<"Numero di celle:"<<counter<<endl;
+  PrintStack(r);
+  RemoveChar(r, counter);
+  RemoveStack(r, counter);
+
 
 }
